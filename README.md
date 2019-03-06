@@ -21,6 +21,7 @@ git clone https://github.com/Talophex/PITA.git
 
 
 Install [pip](https://pip.pypa.io/en/stable/).  
+  
 Install dependencies:  
 
 ```bash

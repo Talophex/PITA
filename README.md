@@ -1,6 +1,6 @@
 # PITA
-PredictIt Tracking and Analysis
-language: Python 2.7
+PredictIt Tracking and Analysis  
+primary language: Python 2.7
 
 Current:  
 -Polls the predictit.org API to retrieve current pricing data as a JSON object  

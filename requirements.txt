@@ -7,3 +7,5 @@ SQLAlchemy == 1.3.0
 
 # PullCurrentData.py: 11
 requests == 2.21.0
+
+python-crontab == 2.3.6

@@ -2,6 +2,7 @@
 PredictIt Tracking and Analysis  
 primary language: Python 2.7
 
+# Features  
 Current:  
 -Polls the predictit.org API every minute to retrieve current pricing data as a JSON object  
 -Inserts data into SQLite3 database using SQLAlchemy ORM  

@@ -28,7 +28,7 @@ jsondata = json.loads(response.text)
 
 
 """ Add data to SQLite3 tables """
-engine = sqlalchemy.create_engine('sqlite:///' + os.getcwd() + '//pita.db', echo=True)
+engine = sqlalchemy.create_engine('sqlite:///' + os.getcwd() + '/pita.db', echo=True)
 base = automap_base()
 base.prepare(engine, reflect=True)
 Markets = base.classes.Markets
@@ -38,6 +38,7 @@ session = Session(engine)
 
 
 """ Add price data to database. If contract or market is missing, add it. """
+currtimestamp = dateutil.parser.parse(jsondata['markets'][0]['timeStamp'])
 for a in xrange(0,len(jsondata['markets'])):
     currmark = jsondata['markets'][a]
     try:
@@ -54,8 +55,8 @@ for a in xrange(0,len(jsondata['markets'])):
                 session.add(Contracts(market_id=session.query(Markets.market_id).filter_by(market_predictit_id=currmark['id']).scalar(), contract_name=currcon['name'], contract_status=currcon['status'], contract_predictit_id=currcon['id']))
         except MultipleResultsFound, e:
             print e
-        newprice = Prices(contract_id=session.query(Contracts.contract_id).filter_by(contract_predictit_id=currcon['id']).scalar(),last_price=currcon['lastTradePrice'],buy_yes=currcon['bestBuyYesCost'],buy_no=currcon['bestBuyNoCost'],sell_yes=currcon['bestSellYesCost'],sell_no=currcon['bestSellNoCost'],time_stamp=dateutil.parser.parse(currmark['timeStamp']))
+        newprice = Prices(contract_id=session.query(Contracts.contract_id).filter_by(contract_predictit_id=currcon['id']).scalar(),last_price=currcon['lastTradePrice'],buy_yes=currcon['bestBuyYesCost'],buy_no=currcon['bestBuyNoCost'],sell_yes=currcon['bestSellYesCost'],sell_no=currcon['bestSellNoCost'],time_stamp=currtimestamp)
         session.add(newprice)
 session.commit()
         
-print datetime.datetime.now()-starttime
+print "Total time taken: " + str(datetime.datetime.now()-starttime)

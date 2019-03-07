@@ -14,7 +14,7 @@ from sqlalchemy.orm import relation, backref, sessionmaker, scoped_session
 
 """ Build database with SQLAlchemy """
 
-engine = sqlalchemy.create_engine('sqlite:///' + os.getcwd() + '//pita.db', echo=True)
+engine = sqlalchemy.create_engine('sqlite:///' + os.getcwd() + '/pita.db', echo=True)
 base = sqlalchemy.ext.declarative.declarative_base(bind=engine)
 
 # Define tables:

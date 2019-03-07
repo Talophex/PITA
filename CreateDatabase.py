@@ -54,7 +54,7 @@ class Contracts(base):
 class Prices(base):
     __tablename__ = 'Prices'
     price_id = Column(Integer, primary_key=True)
-    contract_id = Column(Integer, ForeignKey('Contracts.contract_id'))
+    contract_id = Column(Integer, ForeignKey('Contracts.contract_id'), nullable=False)
     last_price = Column(DECIMAL(1,2))
     buy_yes = Column(DECIMAL(1,2))
     buy_no = Column(DECIMAL(1,2))

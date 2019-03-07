@@ -27,7 +27,7 @@ jsondata = json.loads(response.text)
 
 
 """ Add data to SQLite3 tables """
-engine = sqlalchemy.create_engine('sqlite:///' + os.getcwd() + '\\pita.db', echo=True)
+engine = sqlalchemy.create_engine('sqlite:///' + os.getcwd() + '//pita.db', echo=True)
 base = automap_base()
 base.prepare(engine, reflect=True)
 Markets = base.classes.Markets

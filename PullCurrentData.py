@@ -55,6 +55,7 @@ for a in xrange(0,len(jsondata['markets'])):
         except MultipleResultsFound, e:
             print e
         newprice = Prices(contract_id=session.query(Contracts.contract_id).filter_by(contract_predictit_id=currcon['id']).scalar(),last_price=currcon['lastTradePrice'],buy_yes=currcon['bestBuyYesCost'],buy_no=currcon['bestBuyNoCost'],sell_yes=currcon['bestSellYesCost'],sell_no=currcon['bestSellNoCost'],time_stamp=dateutil.parser.parse(currmark['timeStamp']))
+        session.add(newprice)
 session.commit()
         
 print datetime.datetime.now()-starttime

@@ -1,0 +1,5 @@
+1.   Place .db files from other sources in this directory, their filenames do not matter.
+2.   Run MergeDBs.py
+     -rows will be checked against pita.db in main directory (one level up)
+     -unique rows will be added
+     -if merge completes successfully, external .db files will be deleted from this directory

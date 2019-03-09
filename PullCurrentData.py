@@ -28,7 +28,7 @@ jsondata = json.loads(response.text)
 
 
 """ Add data to SQLite3 tables """
-engine = sqlalchemy.create_engine('sqlite:///' + os.getcwd() + '/pita.db', echo=True)
+engine = sqlalchemy.create_engine('sqlite:///' + os.getcwd() + '/pita.db')
 base = automap_base()
 base.prepare(engine, reflect=True)
 Markets = base.classes.Markets
@@ -58,5 +58,5 @@ for a in xrange(0,len(jsondata['markets'])):
         newprice = Prices(contract_id=session.query(Contracts.contract_id).filter_by(contract_predictit_id=currcon['id']).scalar(),last_price=currcon['lastTradePrice'],buy_yes=currcon['bestBuyYesCost'],buy_no=currcon['bestBuyNoCost'],sell_yes=currcon['bestSellYesCost'],sell_no=currcon['bestSellNoCost'],time_stamp=currtimestamp)
         session.add(newprice)
 session.commit()
-        
+
 print "Total time taken: " + str(datetime.datetime.now()-starttime)

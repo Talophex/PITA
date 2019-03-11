@@ -45,10 +45,18 @@ python CronScheduler.py
 ```
 
 # Basic use:  
-To dump price data into csv, run:
+I. To dump price data into csv, run:
 ```bash
 
 python DumpCSV.py <market-predictit-id>
 
 ```
 A separate csv file will be created for each contract found in the specified market.
+  
+II. To disconnect the current database for storage, run:
+```bash
+
+python DisconnectDatabase.py
+
+```
+A new database will automatically be created by CreateDatabase.py to ensure no disruptions to data acquisition.

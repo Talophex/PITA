@@ -1,3 +1,4 @@
-pita.db
 privatekey.ppk
 pita.sublime-workspace
+*.pyc
+*.db

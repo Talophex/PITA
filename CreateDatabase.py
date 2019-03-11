@@ -8,6 +8,9 @@ Created on Tue Mar 05 17:06:40 2019
 import os
 import sqlalchemy
 import sqlalchemy.ext.declarative
+
+from sqlalchemy import UniqueConstraint
+
 from sqlalchemy import Table, Column, Integer, String, DECIMAL
 from sqlalchemy import MetaData, create_engine, ForeignKey
 from sqlalchemy.orm import relation, backref, sessionmaker, scoped_session
@@ -25,7 +28,7 @@ class Markets(base):
     market_url = Column(String)
     market_status = Column(String)
     market_predictit_id = Column(Integer)
-    
+
     def __init__(self, market_name, market_url, market_status, market_predictit_id):
         self.market_name = market_name
         self.market_url = market_url
@@ -34,7 +37,7 @@ class Markets(base):
 
     def __repr__(self):
         return "<Asset('%s', '%s')>" % (self.market_name, self.market_url, self.market_status, self.market_predictit_id)
-    
+
 class Contracts(base):
     __tablename__ = 'Contracts'
     contract_id = Column(Integer, primary_key=True)
@@ -42,7 +45,7 @@ class Contracts(base):
     contract_name = Column(String)
     contract_status = Column(String)
     contract_predictit_id = Column(Integer)
-    
+
     def __init__(self, contract_name, contract_status, contract_predictit_id):
         self.contract_name = contract_name
         self.contract_status = contract_status
@@ -50,7 +53,32 @@ class Contracts(base):
 
     def __repr__(self):
         return "<Asset('%s', '%s')>" % (self.contract_name, self.contract_status, self.contract_predictit_id)
-    
+
+
+class Volumes(base):
+    __tablename__ = 'Volumes'
+    volume_id = Column(Integer, primary_key=True)
+    contract_id = Column(Integer, ForeignKey('Contracts.contract_id'),
+                         nullable=False)
+    open_share_price = Column(DECIMAL(1, 2))
+    high_share_price = Column(DECIMAL(1, 2))
+    low_share_price = Column(DECIMAL(1, 2))
+    close_share_price = Column(DECIMAL(1, 2))
+    volume = Column(Integer)
+    time_stamp = Column(sqlalchemy.types.TIMESTAMP)
+
+    __table_args__ = (UniqueConstraint('contract_id', 'time_stamp',
+                                       name='_contract_timestamp_uc'),)
+
+    def __init__(self, open, high, low, close, volume, time_stamp):
+        self.open = open
+        self.high = high
+        self.low = low
+        self.close = close
+        self.volume = volume
+        self.time_stamp = time_stamp
+
+
 class Prices(base):
     __tablename__ = 'Prices'
     price_id = Column(Integer, primary_key=True)
@@ -61,7 +89,7 @@ class Prices(base):
     sell_yes = Column(DECIMAL(1,2))
     sell_no = Column(DECIMAL(1,2))
     time_stamp = Column(sqlalchemy.types.TIMESTAMP)
-    
+
     def __init__(self, last_price, buy_yes, buy_no, sell_yes, sell_no):
         self.last_price = last_price
         self.buy_yes = buy_yes
@@ -72,5 +100,5 @@ class Prices(base):
 
     def __repr__(self):
         return "<Asset('%s', '%s')>" % (self.last_price, self.buy_yes, self.buy_no, self.sell_yes, self.sell_no, self.time_stamp)
-    
+
 base.metadata.create_all(engine)

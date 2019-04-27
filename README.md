@@ -1,6 +1,7 @@
 # PITA
 PredictIt Tracking and Analysis  
 primary language: Python 2.7
+requires Unix/Linux for Cron scheduling
 
 # Features  
 Current:  

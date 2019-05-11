@@ -2,3 +2,4 @@ privatekey.ppk
 pita.sublime-workspace
 *.pyc
 *.db
+*.csv
